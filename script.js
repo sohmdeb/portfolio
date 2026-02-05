@@ -9,25 +9,40 @@ const loader = document.getElementById("loader");
 
 window.addEventListener("load", () => {
 
+/* Loader */
+
+let load = 0, frame = 0;
+
+const loadText = document.getElementById("loadText");
+const bar = document.getElementById("barFill");
+const frameText = document.getElementById("frameText");
+const loader = document.getElementById("loader");
+
 const int = setInterval(() => {
 
-load += Math.floor(Math.random() * 5) + 1;
-if (load > 100) load = 100;
+  load += Math.floor(Math.random() * 5) + 1;
+  if (load > 100) load = 100;
 
-frame += Math.floor(Math.random() * 200) + 50;
+  frame += Math.floor(Math.random() * 200) + 50;
 
-loadText.innerText = `Rendering ${load}%`;
-frameText.innerText = `Frame ${frame}`;
-bar.style.width = load + "%";
+  loadText.innerText = `Rendering ${load}%`;
+  frameText.innerText = `Frame ${frame}`;
+  bar.style.width = load + "%";
 
-if (load === 100) {
-clearInterval(int);
-setTimeout(() => loader.style.display = "none", 500);
-}
+  if (load === 100) {
+    clearInterval(int);
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 500);
+  }
 
 }, 60);
 
-});
+/* Safety: Force close loader after 4s */
+setTimeout(() => {
+  loader.style.display = "none";
+}, 4000);
+
 
 
 /* Glow */
