@@ -83,10 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ================= TYPING ================= */
 
   const texts = [
-    "I'm a video editor",
-    "I'm a graphic designer",
-    "I'm an enthusiast",
-    "I create magic"
+    "I'm a video editor.",
+    "I'm a graphic designer.",
+    "I'm an enthusiast.",
+    "I create messy timelines.",
+    "I create magic."
   ];
 
   let count = 0;
