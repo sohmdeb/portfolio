@@ -57,14 +57,6 @@ document.getElementById("theme").addEventListener("change", () => {
 document.body.classList.toggle("light");
 });
 
-// Hamburger menu toggle
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-
-hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('active');
-});
-
 
 
 /* Typing Effect */
