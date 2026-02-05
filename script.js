@@ -1,121 +1,155 @@
-/* Loader */
+document.addEventListener("DOMContentLoaded", () => {
 
-let load = 0, frame = 0;
+  /* ================= LOADER ================= */
 
-const loadText = document.getElementById("loadText");
-const bar = document.getElementById("barFill");
-const frameText = document.getElementById("frameText");
-const loader = document.getElementById("loader");
+  let load = 0;
+  let frame = 0;
 
-window.addEventListener("load", () => {
+  const loadText = document.getElementById("loadText");
+  const bar = document.getElementById("barFill");
+  const frameText = document.getElementById("frameText");
+  const loader = document.getElementById("loader");
 
-/* Loader */
+  if (loader) {
 
-let load = 0, frame = 0;
+    const int = setInterval(() => {
 
-const loadText = document.getElementById("loadText");
-const bar = document.getElementById("barFill");
-const frameText = document.getElementById("frameText");
-const loader = document.getElementById("loader");
+      load += Math.floor(Math.random() * 5) + 1;
+      if (load > 100) load = 100;
 
-const int = setInterval(() => {
+      frame += Math.floor(Math.random() * 200) + 50;
 
-  load += Math.floor(Math.random() * 5) + 1;
-  if (load > 100) load = 100;
+      loadText.textContent = `Rendering ${load}%`;
+      frameText.textContent = `Frame ${frame}`;
+      bar.style.width = load + "%";
 
-  frame += Math.floor(Math.random() * 200) + 50;
+      if (load === 100) {
+        clearInterval(int);
 
-  loadText.innerText = `Rendering ${load}%`;
-  frameText.innerText = `Frame ${frame}`;
-  bar.style.width = load + "%";
+        setTimeout(() => {
+          loader.style.opacity = "0";
+          loader.style.pointerEvents = "none";
 
-  if (load === 100) {
-    clearInterval(int);
+          setTimeout(() => {
+            loader.style.display = "none";
+          }, 400);
+
+        }, 300);
+      }
+
+    }, 50);
+
+    /* Safety fallback */
     setTimeout(() => {
       loader.style.display = "none";
-    }, 500);
+    }, 5000);
   }
 
-}, 60);
 
-/* Safety: Force close loader after 4s */
-setTimeout(() => {
-  loader.style.display = "none";
-}, 4000);
+  /* ================= GLOW ================= */
+
+  document.addEventListener("mousemove", e => {
+    document.body.style.setProperty("--x", e.clientX + "px");
+    document.body.style.setProperty("--y", e.clientY + "px");
+  });
 
 
+  /* ================= SCROLL REVEAL ================= */
 
-/* Glow */
+  const sections = document.querySelectorAll(".section");
 
-document.addEventListener("mousemove", e => {
-document.body.style.setProperty("--x", e.clientX + "px");
-document.body.style.setProperty("--y", e.clientY + "px");
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+      }
+    });
+  }, { threshold: 0.15 });
+
+  sections.forEach(sec => obs.observe(sec));
+
+
+  /* ================= THEME ================= */
+
+  const themeToggle = document.getElementById("theme");
+
+  if (themeToggle) {
+    themeToggle.addEventListener("change", () => {
+      document.body.classList.toggle("light");
+    });
+  }
+
+
+  /* ================= TYPING ================= */
+
+  const texts = [
+    "I'm a video editor",
+    "I'm a graphic designer",
+    "I'm an enthusiast",
+    "I create magic"
+  ];
+
+  let count = 0;
+  let index = 0;
+
+  const speed = 90;
+  const typed = document.getElementById("typed");
+
+  function type() {
+
+    if (!typed) return;
+
+    if (count === texts.length) count = 0;
+
+    const current = texts[count];
+    const letter = current.slice(0, ++index);
+
+    typed.textContent = letter;
+
+    if (letter.length === current.length) {
+
+      setTimeout(() => {
+
+        const del = setInterval(() => {
+
+          typed.textContent = current.slice(0, --index);
+
+          if (index === 0) {
+            clearInterval(del);
+            count++;
+            type();
+          }
+
+        }, 50);
+
+      }, 1200);
+
+    } else {
+      setTimeout(type, speed);
+    }
+  }
+
+  type();
+
+
+  /* ================= HAMBURGER ================= */
+
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  if (hamburger && mobileMenu) {
+
+    hamburger.addEventListener("click", () => {
+      mobileMenu.classList.toggle("active");
+    });
+
+    // Close menu on link click
+    mobileMenu.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("active");
+      });
+    });
+
+  }
+
 });
-
-
-/* Scroll Reveal */
-
-const sections = document.querySelectorAll(".section");
-
-const obs = new IntersectionObserver(entries => {
-entries.forEach(e => {
-if (e.isIntersecting) e.target.classList.add("show");
-});
-}, { threshold: 0.15 });
-
-sections.forEach(s => obs.observe(s));
-
-
-/* Theme */
-
-document.getElementById("theme").addEventListener("change", () => {
-document.body.classList.toggle("light");
-});
-
-
-/* Typing Effect */
-
-const texts = [
-"I'm a video editor.",
-"I'm a graphic designer.",
-"I'm an enthusiast.",
-"I create messy timelines."
-"I create magic."
-];
-
-let count = 0, index = 0, current = "", letter = "";
-const speed = 90;
-
-(function type() {
-
-if (count === texts.length) count = 0;
-
-current = texts[count];
-letter = current.slice(0, ++index);
-
-document.getElementById("typed").textContent = letter;
-
-if (letter.length === current.length) {
-
-setTimeout(() => {
-
-let del = setInterval(() => {
-
-document.getElementById("typed").textContent =
-current.slice(0, --index);
-
-if (index === 0) {
-clearInterval(del);
-count++;
-type();
-}
-
-}, 50);
-
-}, 1200);
-
-} else {
-setTimeout(type, speed);
-}
-
-})();
