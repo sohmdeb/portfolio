@@ -374,6 +374,15 @@ opacity:0.6;
 
 @media(max-width:768px){
 
+nav ul{
+  width:100%;
+  padding: 0 5px;
+}
+  nav a{
+  font-size: 0.95rem;
+}
+
+
 nav{
 flex-direction:column;
 gap:15px;
