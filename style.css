@@ -349,7 +349,10 @@ width:22px;
 
 .insta{background:#ec4899}
 .mail{background:#3b82f6}
-.phone{background:#22c55e}
+.phone{
+  background: #ECE5DD;
+  color: #075E54; /* WhatsApp dark green text */
+}
 
 /* Footer */
 
